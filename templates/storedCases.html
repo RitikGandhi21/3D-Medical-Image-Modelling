@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <title>DMIM</title>
+
+<!-- -BOOTSTRAP JQUERY  -->
+<link rel="stylesheet" href="/static/css/bootstrap/bootstrap.min.css">
+<script src="/static/js/jquery/jquery.min.js"></script>
+<script src="/static/js/bootstrap/bootstrap.min.js"></script>
+
+ </head>
+ <body>
+
+ <nav class="navbar navbar-inverse navbar-static-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#"></a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a href="/">Home</a></li>
+      <li class="active"><a href="/storedCases">Stored cases</a></li>
+      <li><a href="/uploadNew">Upload new case</a></li>
+      <li><a href="/analyze">3D Analysis</a></li>
+      <li><a href="/analyzeex">Slice Analysis</a></li>
+    </ul>
+  </div>
+</nav>
+
+  <div class="container">
+   <div class="header">
+    <h3 class="text-muted">Stored cases:</h3>
+   </div>
+   </div>
+   <hr/>
+
+  <div class="container">
+ <div class="header">
+
+   <ul>
+    {% if items == 0 %}
+    <h4>The database is empty</h4>
+    {% else %}
+    {% for item in items %}
+    <p> <strong>Name: </strong> {{ item.firstName + ' ' + item.lastName }} </p>
+
+    <div style="display: inline-block;">
+    <p> <strong>ID: </strong> <a href="{{ uploadFolder + '/' + item._id }}"> {{ item._id }}</a>&nbsp &nbsp</p></div>
+
+
+    <button class="btn btn-danger btn-xs" data-href="{{ '/delete' + '/' + item._id }}" data-toggle="modal" data-target="#confirm-delete">
+        Delete case
+    </button>
+
+    <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Confirm Delete</h4>
+                </div>
+
+                <div class="modal-body">
+                    <p>You are about to delete this case, this procedure is irreversible.</p>
+                    <p>Do you want to proceed?</p>
+                    <p class="debug-url"></p>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-danger btn-ok">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $('#confirm-delete').on('show.bs.modal', function(e) {
+            $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+        });
+    </script>
+
+
+
+    <p><a href="{{ '/analyze/' + item._id}}" style="color: #ff0000"><button type="button" class="btn btn-primary btn-sm">3D Analysis</button></a>
+    &nbsp;&nbsp;&nbsp;<a href="{{ '/analyzeex/' + item._id}}" style="color: #a00000"><button type="button" class="btn btn-primary btn-sm">Slice Analysis</button></a></p>
+
+
+    <hr/>
+    {% endfor %}
+    {% endif %}
+   </ul>
+
+  </div>
+ </div>
+
+ </body>
+</html>

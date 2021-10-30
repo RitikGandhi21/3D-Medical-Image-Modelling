@@ -1,0 +1,53 @@
+
+<html>
+<head>
+<meta charset="UTF-8">
+<title>DMIM</title>
+
+<!-- THREEJS -->
+<script type="text/javascript" src="/static/js/ami/three.min.js"></script>
+
+<!-- AMI -->
+<script type="text/javascript" src="/static/js/ami/dat.gui.min.js"></script>
+<script type="text/javascript" src="/static/js/ami/ami.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/css/ami/styleAmi.css">
+
+<!-- BOOTSTRAP JQUERY  -->
+<link rel="stylesheet" href="/static/css/bootstrap/bootstrap.min.css">
+<script src="/static/js/jquery/jquery.min.js"></script>
+<script src="/static/js/bootstrap/bootstrap.min.js"></script>
+
+</head>
+
+<body style="overflow-y: hidden">
+
+<nav class="navbar navbar-inverse navbar-static-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#"></a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a href="/">Home</a></li>
+      <li><a href="/storedCases">Stored cases</a></li>
+      <li><a href="/uploadNew">Upload new case</a></li>
+      <li class="active"><a href="/analyze">3D Analysis</a></li>
+      <li><a href="/analyzeex">Slice Analysis</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div id="my-gui-container"></div>
+<div id="container"></div>
+<div id="code" fileName="{{ fileName }}">
+
+  <script type="text/javascript" charset="utf-8">
+    var parsed = JSON.parse({{fileName|tojson|safe}});
+    var path = "{{ path }}";
+    console.log(path);
+  </script>
+  <script type="text/javascript" src="/static/js/ami/amiEx.js"> </script>
+
+</div>
+</body>
+</html>
+
